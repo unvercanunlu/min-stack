@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import tr.unvercanunlu.min_stack.service.MinStack;
 
 @Slf4j
-public abstract class MinStackImpl<T extends Comparable<T>> implements MinStack<T> {
+public abstract class BaseMinStackImpl<T extends Comparable<T>> implements MinStack<T> {
 
   private final Stack<T> stack = new Stack<>();
   private final Stack<T> minStack = new Stack<>();
