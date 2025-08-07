@@ -1,22 +1,20 @@
 package tr.unvercanunlu.min_stack.service.impl;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.NoSuchElementException;
-import java.util.Stack;
 import lombok.extern.slf4j.Slf4j;
 import tr.unvercanunlu.min_stack.service.MinStack;
 
 @Slf4j
 public abstract class BaseMinStackImpl<T extends Comparable<T>> implements MinStack<T> {
 
-  private final Stack<T> stack = new Stack<>();
-  private final Stack<T> minStack = new Stack<>();
+  private final Deque<T> stack = new ArrayDeque<>();
+  private final Deque<T> minStack = new ArrayDeque<>();
 
   @Override
-  public T getMin() {
-    if (stack.isEmpty()) {
-      log.error("Stack is empty!");
-      throw new NoSuchElementException("Stack empty!");
-    }
+  public synchronized T getMin() {
+    ensureStackNotEmpty();
 
     T min = minStack.peek();
 
@@ -26,11 +24,8 @@ public abstract class BaseMinStackImpl<T extends Comparable<T>> implements MinSt
   }
 
   @Override
-  public T peek() {
-    if (stack.isEmpty()) {
-      log.error("Stack is empty!");
-      throw new NoSuchElementException("Stack empty!");
-    }
+  public synchronized T peek() {
+    ensureStackNotEmpty();
 
     T last = stack.peek();
 
@@ -40,11 +35,8 @@ public abstract class BaseMinStackImpl<T extends Comparable<T>> implements MinSt
   }
 
   @Override
-  public T pop() {
-    if (stack.isEmpty()) {
-      log.error("Stack is empty!");
-      throw new NoSuchElementException("Stack empty!");
-    }
+  public synchronized T pop() {
+    ensureStackNotEmpty();
 
     T popped = stack.pop();
 
@@ -58,7 +50,7 @@ public abstract class BaseMinStackImpl<T extends Comparable<T>> implements MinSt
   }
 
   @Override
-  public void push(T value) {
+  public synchronized void push(T value) {
     if (minStack.isEmpty() || minStack.peek().compareTo(value) >= 0) {
       minStack.push(value);
     }
@@ -69,7 +61,7 @@ public abstract class BaseMinStackImpl<T extends Comparable<T>> implements MinSt
   }
 
   @Override
-  public void clear() {
+  public synchronized void clear() {
     stack.clear();
     minStack.clear();
 
@@ -77,12 +69,20 @@ public abstract class BaseMinStackImpl<T extends Comparable<T>> implements MinSt
   }
 
   @Override
-  public int size() {
+  public synchronized int size() {
     int size = stack.size();
 
     log.info("Stack contains '{}' elements.", size);
 
     return size;
+  }
+
+  private void ensureStackNotEmpty() throws NoSuchElementException {
+    if (stack.isEmpty()) {
+      log.error("Stack is empty!");
+
+      throw new NoSuchElementException("Stack empty!");
+    }
   }
 
 }
