@@ -1,32 +1,55 @@
-# MinStack
+# Stack
 
-A minimal Java stack that supports `getMin()` in **O(1)** time.
+A modular Java stack implementation with support for **min/max in O(1)** time, validators, and
+domain-specific extensions.
 
 ## Features
 
-- Generic & thread-safe
-- `push`, `pop`, `peek`, `clear`, `getMin()`
-- Constant-time min tracking
-- No frameworks required
+* Generic & thread-safe `Stack<T>`
+* Core operations: `push`, `pop`, `peek`, `clear`, `size`
+* Constant-time **min/max tracking** with `BaseMinMaxStack`
+* Domain-specific validation (e.g. `Product` with name/price rules)
+* Built-in validators:
+
+    * `DefaultValidator` (non-null)
+    * `PriceValidator` (range checks)
+    * `TextValidator` (non-empty strings)
 
 ## Tech
 
-- Java 21, Maven
-- Lombok, SLF4J
-- JUnit 5, Mockito, JaCoCo
+* Java 21, Maven
+* Lombok, SLF4J
 
 ## Usage
 
+### Integer stack
+
 ```java
-MinStack<Integer> stack = new MyMinStackImpl(); // your subclass
+IntegerStack stack = new IntegerStack();
+stack.push(10);
 stack.push(5);
-stack.push(3);
-int min = stack.getMin(); // 3
-````
 
-## Test & Coverage
+System.out.println(stack.pop().get()); // 5
+System.out.println(stack.peek().get()); // 10
+```
 
-```bash
-mvn test        # Run tests
-mvn verify      # Generate coverage report
+### Product stack with min/max by price
+
+```java
+ProductMinMaxStack productStack = new ProductMinMaxStack();
+productStack.push(new Product("Apple", 5));
+productStack.push(new Product("Banana", 10));
+
+System.out.println(productStack.peekMin().get()); // Apple
+System.out.println(productStack.peekMax().get()); // Banana
+```
+
+### Product stack with custom comparator (by name)
+
+```java
+ProductMinMaxStack nameStack = new ProductMinMaxStack(Util.BY_NAME_ASC);
+nameStack.push(new Product("Zebra", 20));
+nameStack.push(new Product("Apple", 15));
+
+System.out.println(nameStack.peekMin().get()); // Apple
 ```
