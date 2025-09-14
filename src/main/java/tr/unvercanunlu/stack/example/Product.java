@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import tr.unvercanunlu.stack.util.Util;
+import tr.unvercanunlu.stack.util.Utils;
 
 @Slf4j
 @EqualsAndHashCode
@@ -18,8 +18,8 @@ public class Product implements Comparable<Product> {
   private final int price;
 
   public Product(String name, int price) {
-    Util.validateName(name);
-    Util.validatePrice(price);
+    Utils.validateName(name);
+    Utils.validatePrice(price);
     this.name = name;
     this.price = price;
   }
@@ -31,7 +31,7 @@ public class Product implements Comparable<Product> {
       throw new IllegalArgumentException("Other product null!");
     }
 
-    return Util.BY_PRICE_ASC.compare(this, other);
+    return Utils.BY_PRICE_ASC.compare(this, other);
   }
 
 }

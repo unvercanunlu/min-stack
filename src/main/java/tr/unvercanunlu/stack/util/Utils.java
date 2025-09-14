@@ -1,6 +1,8 @@
 package tr.unvercanunlu.stack.util;
 
 import java.util.Comparator;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tr.unvercanunlu.stack.example.Product;
 import tr.unvercanunlu.stack.validation.Validator;
@@ -9,7 +11,8 @@ import tr.unvercanunlu.stack.validation.impl.PriceValidator;
 import tr.unvercanunlu.stack.validation.impl.TextValidator;
 
 @Slf4j
-public class Util {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class Utils {
 
   // validators
   public static final Validator<String> TEXT_VALIDATOR = new TextValidator();

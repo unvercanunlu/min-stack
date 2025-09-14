@@ -2,14 +2,14 @@ package tr.unvercanunlu.stack.example;
 
 import lombok.extern.slf4j.Slf4j;
 import tr.unvercanunlu.stack.service.impl.BaseStack;
-import tr.unvercanunlu.stack.util.Util;
+import tr.unvercanunlu.stack.util.Utils;
 
 @Slf4j
 public class IntegerStack extends BaseStack<Integer> {
 
   @Override
   protected boolean isValueValid(Integer value) {
-    return Util.defaultValidator()
+    return Utils.defaultValidator()
         .isValueValid(value);
   }
 
