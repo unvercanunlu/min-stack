@@ -27,6 +27,7 @@
     <maven.compiler.version>3.14.0</maven.compiler.version>
     <lombok.version>1.18.38</lombok.version>
     <slf4j.version>2.0.17</slf4j.version>
+    <logback.classic.version>1.5.18</logback.classic.version>
   </properties>
 
   <dependencies>
@@ -43,6 +44,13 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>${slf4j.version}</version>
+    </dependency>
+
+    <!-- logback -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.classic.version}</version>
     </dependency>
   </dependencies>
 
